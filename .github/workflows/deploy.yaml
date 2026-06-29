@@ -12,9 +12,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
-         with:
+        with:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
@@ -22,5 +23,3 @@ jobs:
             cd /home/ubuntu/nodejs-application-deploy-github-actions
             git pull 
             sudo docker compose up -d --build
-           
-  
