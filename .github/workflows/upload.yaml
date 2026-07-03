@@ -1,28 +1,3 @@
-name: Minimal Input and Output Demo
-
-on:
-   workflow_dispatch:
-    inputs:
-      user_name:
-        required: true # required input variable
-        default: 'World' #set default value for input variable
-        
-jobs:
-  greet-and-output:
-    runs-on: ubuntu-latest
-    steps:
-      # 1. Using the INPUT variable and SETTING the OUTPUT
-      - name: Read Input and Set Output
-        id: step1
-        run: |
-          echo "Hello, ${{ inputs.user_name }}!"
-          # Must save the output variable 'user' to the GitHub Actions output
-          echo "user=Hello, ${{ inputs.user_name }}!" >> $GITHUB_OUTPUT
-          
-
-       # 2. Accessing the output variable from the previous step
-      - name: View 
-        run: echo "${{ steps.step1.outputs.user }}"
 name: File Transfer Demo
 
 on: workflow_dispatch
