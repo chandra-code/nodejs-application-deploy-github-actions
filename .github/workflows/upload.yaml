@@ -4,18 +4,22 @@ on:
    workflow_dispatch:
     inputs:
       user_name:
+        required: true
+        default: 'World'
         
 jobs:
   greet-and-output:
     runs-on: ubuntu-latest
     steps:
-      # 1. Using the INPUT variable
-      # Inputs from workflow_dispatch are accessed via ${{ inputs.<input_name> }}
+      # 1. Using the INPUT variable and SETTING the OUTPUT
       - name: Read Input and Set Output
         id: step1
         run: |
           echo "Hello, ${{ inputs.user_name }}!"
+          # This writes the key-value pair to the GitHub Actions output runner
+          echo "out=Hello, ${{ inputs.user_name }}!" >> $GITHUB_OUTPUT
+          
 
-       # Outputs are accessed via ${{ steps.<step_id>.outputs.<output_name> }}  
+       # 2. Accessing the output from the previous step
       - name: View 
         run: echo "${{ steps.step1.outputs.out }}"
