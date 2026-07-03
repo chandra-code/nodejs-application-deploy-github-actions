@@ -23,3 +23,33 @@ jobs:
        # 2. Accessing the output variable from the previous step
       - name: View 
         run: echo "${{ steps.step1.outputs.user }}"
+name: File Transfer Demo
+
+on: workflow_dispatch
+
+jobs:
+  # Job 1: Create a file and upload it to GitHub's servers
+  upload_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create file
+        run: echo "Hello World" > sample.txt
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact   # The name of the zip folder GitHub will create
+          path: sample.txt    # The path to the file you want to upload
+
+  # Job 2: Download that file and use it
+  download_job:
+    needs: upload_job         # Forces this job to wait for the upload to finish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact   # Must match the name used in the upload step
+
+      - name: View file
+        run: cat sample.txt   # Proves the file was successfully downloaded
