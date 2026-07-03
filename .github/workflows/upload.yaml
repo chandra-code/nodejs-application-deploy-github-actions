@@ -1,11 +1,21 @@
-name: First Workflow
-on: workflow_dispatch
- # Allow to run this workflow manually from the Actions tab
+name: Minimal Input and Output Demo
+
+on:
+   workflow_dispatch:
+    inputs:
+      user_name:
+        
 jobs:
-  first-job:
+  greet-and-output:
     runs-on: ubuntu-latest
     steps:
-      - name: Print greeting
-        run: echo "Hello World!"
-      - name: Print goodbye
-        run: echo "Done - bye!"
+      # 1. Using the INPUT variable
+      # Inputs from workflow_dispatch are accessed via ${{ inputs.<input_name> }}
+      - name: Read Input and Set Output
+        id: step1
+        run: |
+          echo "Hello, ${{ inputs.user_name }}!"
+
+       # Outputs are accessed via ${{ steps.<step_id>.outputs.<output_name> }}  
+      - name: View 
+        run: echo "${{ steps.step1.outputs.out }}"
