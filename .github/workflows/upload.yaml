@@ -4,8 +4,8 @@ on:
    workflow_dispatch:
     inputs:
       user_name:
-        required: true
-        default: 'World'
+        required: true # required input variable
+        default: 'World' #set default value for input variable
         
 jobs:
   greet-and-output:
@@ -16,10 +16,10 @@ jobs:
         id: step1
         run: |
           echo "Hello, ${{ inputs.user_name }}!"
-          # This writes the key-value pair to the GitHub Actions output runner
-          echo "out=Hello, ${{ inputs.user_name }}!" >> $GITHUB_OUTPUT
+          # Must save the output variable 'user' to the GitHub Actions output
+          echo "user=Hello, ${{ inputs.user_name }}!" >> $GITHUB_OUTPUT
           
 
-       # 2. Accessing the output from the previous step
+       # 2. Accessing the output variable from the previous step
       - name: View 
-        run: echo "${{ steps.step1.outputs.out }}"
+        run: echo "${{ steps.step1.outputs.user }}"
