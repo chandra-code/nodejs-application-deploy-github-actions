@@ -1,0 +1,14 @@
+name: Concurrency Example
+on: [push]
+# This ensures only ONE run happens per branch at a time
+concurrency:
+  cancel-in-progress: true # Change to false if this is a deployment
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate work
+        run: |
+          echo "Starting a 30-second task..."
+          sleep 30
+          echo "Task finished!"
